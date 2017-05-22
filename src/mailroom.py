@@ -19,7 +19,7 @@ def initialize_dictionary():
             key = word.lower()
             amount_list = []
         else:
-            amount_list.append(int(word))
+            amount_list.append(float(word))
         DATABASE[key] = amount_list
     f.close()
     print("dictionary is : ", DATABASE)  # for debugging purpose
