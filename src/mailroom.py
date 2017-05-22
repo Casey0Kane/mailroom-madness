@@ -78,7 +78,7 @@ def donation():
 
 def update_donation(name, amount):
     """Update donation value and save it to text file."""
-    DATABASE[name].append(int(amount))
+    DATABASE[name].append(float(amount))
 
 
 def create_text_file():
