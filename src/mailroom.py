@@ -43,9 +43,31 @@ def list_of_donors():
         print(name)
 
 
+def sum_donations(name):
+    """Add all the donations for a particular individual."""
+    total = 0
+    for n in range(len(DATABASE[name])):
+        total = total + float(DATABASE[name][n])
+    return total
+
+
+def get_max_key_val(dict_obj):
+    """Get the key with max sum of values."""
+    max_key = next(iter(dict_obj))
+    for n in dict_obj:
+        if sum_donations(n) > sum_donations(max_key):
+            max_key = n
+    return max_key
+
+
 def create_report():
     """Print list of donor names and amount donated."""
-    print("Name            ")
+    temp_dict = dict(DATABASE)
+    print("{:<15}{:<18}{:<18}{:<15}".format('Name', 'Sum of Donations', 'Times Donated', 'Average Donation'))
+    for n in range(len(DATABASE)):
+        key = get_max_key_val(temp_dict)
+        print("{:<15}{:<18.2f}{:<18d}{:<15.2f}".format(key, sum_donations(key), len(DATABASE[key]), sum_donations(key) / len(DATABASE[key])))
+        del temp_dict[key]
 
 
 def donation():
@@ -90,17 +112,18 @@ iated.  We look forward to your support in 2018.\n\n\n\
 def main():
     """Main program."""
     initialize_dictionary()
-    choice = initial_prompt().lower()
-    while choice != "q":
-        if choice == 't':
-            list_of_donors()
-            DATABASE[input("Please type a donor name: ")].append(float(input("Please enter a dollar amount: ")))
-        elif choice == 'c':
-            print('it"s a C')
-        else:
-            if choice == 'q':
-                sys.exit()
-        choice = initial_prompt().lower()
+    create_report()
+    # choice = initial_prompt().lower()
+    # while choice != "q":
+    #     if choice == 't':
+    #         list_of_donors()
+    #         DATABASE[input("Please type a donor name: ")].append(float(input("Please enter a dollar amount: ")))
+    #     elif choice == 'c':
+    #         print('it"s a C')
+    #     else:
+    #         if choice == 'q':
+    #             sys.exit()
+    #     choice = initial_prompt().lower()
 
 
 if __name__ == "__main__":
